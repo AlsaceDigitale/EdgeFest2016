@@ -24,6 +24,14 @@ public class Player : MonoBehaviour {
 		isFalling = true;
 	}
 
+	void OnCollisionEnter(Collision collisionInfo)
+	{
+		if (collisionInfo.gameObject.tag == "car") {
+			rigidbody.gameObject.SetActive (false);
+			GetComponent<MeshRenderer> ().gameObject.SetActive (false);
+		}
+	}
+
 	void OnCollisionStay(Collision collisionInfo) {
 		isFalling = false;
 	}
