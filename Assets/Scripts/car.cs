@@ -12,8 +12,12 @@ public class car : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -10);
-		if (GetComponent<Rigidbody> ().position.z < -10) {
-			GetComponent<Rigidbody> ().position = OriginalPos;
-		}
+//		if (GetComponent<Rigidbody> ().position.z < -10) {
+//			GetComponent<Rigidbody> ().position = OriginalPos;
+//		}
+	}
+
+	public void resetPosition() {
+		GetComponent<Rigidbody> ().position = OriginalPos;
 	}
 }

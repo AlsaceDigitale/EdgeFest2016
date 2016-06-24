@@ -7,12 +7,18 @@ using System.Text;
 
 public class Player : MonoBehaviour {
 
+	public string jump = "space";
+
 	bool isFalling = false;
 	Rigidbody rigidbody;
+	Animator animator;
+
+	bool isDead = false;
 
 	// Use this for initialization
 	void Start () {
 		rigidbody = GetComponent<Rigidbody> ();
+		animator = GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -21,25 +27,16 @@ public class Player : MonoBehaviour {
 			rigidbody.WakeUp();
 		}
 
-		if (Input.GetKey (KeyCode.Joystick1Button14) && !isFalling) {
-			rigidbody.velocity = new Vector3(0, 7, 0);
+		if (!isFalling) {
+			animator.SetBool ("Jumping", false);
+		}
+
+		if (Input.GetKey (jump) && !isFalling) {
+			rigidbody.velocity = new Vector3(0, 6, 0);
+			animator.SetBool ("Jumping", true);
 		}
 
 		isFalling = true;
-
-
-		for (int j = 1; j < 10; j++) {
-			for (int i = 0; i < 20; i++) {
-				if (Input.GetKeyDown ("joystick " + j + " button " + i)) {
-					Debug.Log ("joystick " + j + " button " + i);
-				}
-			}
-		}
-		if (Input.anyKey) {
-//			Debug.Log (Input.inputString);
-		}
-
-		Debug.Log ("Joystick names: " + string.Join(",", Input.GetJoystickNames ()));
 	}
 
 	void OnCollisionEnter(Collision collisionInfo)
@@ -47,10 +44,15 @@ public class Player : MonoBehaviour {
 		if (collisionInfo.gameObject.tag == "car") {
 			rigidbody.gameObject.SetActive (false);
 			GetComponent<MeshRenderer> ().gameObject.SetActive (false);
+			isDead = true;
 		}
 	}
 
 	void OnCollisionStay(Collision collisionInfo) {
 		isFalling = false;
+	}
+
+	public bool isAlive() {
+		return !isDead;
 	}
 }
