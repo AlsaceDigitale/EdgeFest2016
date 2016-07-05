@@ -4,11 +4,14 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.IO.Ports;
 
 public class Player : MonoBehaviour {
 
 	public string jump = "space";
 	public string jump2 = "space";
+
+	public string team = "1";
 
 	bool isFalling = false;
 	bool canJump = false;
@@ -16,11 +19,28 @@ public class Player : MonoBehaviour {
 	Animator animator;
 
 	bool isDead = false;
+	static SerialPort stream = null;
 
 	// Use this for initialization
 	void Start () {
+		if (stream == null) {
+			stream = new SerialPort("/dev/ttyACM0", 9600, Parity.None, 8, StopBits.One); // mettre le bon chemin du port usb
+			stream.Open();
+		}
+
 		rigidbody = GetComponent<Rigidbody> ();
 		animator = GetComponent<Animator> ();
+
+		// Debug.Log(string.Join(",",Input.GetJoystickNames()));
+
+		var input = getKeyCodeFromCharCode(jump);
+		var input2 = getKeyCodeFromCharCode(jump2);
+
+		if (!Input.GetKey (input) && !Input.GetKey (input2)) {
+			rigidbody.gameObject.SetActive (false);
+			GetComponent<MeshRenderer> ().gameObject.SetActive (false);
+			isDead = true;
+		}
 	}
 	
 	// Update is called once per frame
@@ -33,163 +53,22 @@ public class Player : MonoBehaviour {
 			animator.SetBool ("Jumping", false);
 		}
 
-		var input = KeyCode.JoystickButton1;
-		if (jump == "Joystick1Button1")
-			input = KeyCode.Joystick1Button1;
-		else if (jump == "Joystick1Button2")
-			input = KeyCode.Joystick1Button2;
-		else if (jump == "Joystick1Button3")
-			input = KeyCode.Joystick1Button3;
-		else if (jump == "Joystick1Button4")
-			input = KeyCode.Joystick1Button4;
-		else if (jump == "Joystick1Button5")
-			input = KeyCode.Joystick1Button5;
-		else if (jump == "Joystick1Button6")
-			input = KeyCode.Joystick1Button6;
-		else if (jump == "Joystick1Button7")
-			input = KeyCode.Joystick1Button7;
-		else if (jump == "Joystick1Button8")
-			input = KeyCode.Joystick1Button8;
-		else if (jump == "Joystick1Button9")
-			input = KeyCode.Joystick1Button9;
-		else if (jump == "Joystick1Button10")
-			input = KeyCode.Joystick1Button10;
-		else if (jump == "Joystick1Button11")
-			input = KeyCode.Joystick1Button11;
-		else if (jump == "Joystick1Button12")
-			input = KeyCode.Joystick1Button12;
-		else if (jump == "Joystick1Button13")
-			input = KeyCode.Joystick1Button13;
-		else if (jump == "Joystick1Button14")
-			input = KeyCode.Joystick1Button14;
-		else if (jump == "Joystick1Button15")
-			input = KeyCode.Joystick1Button15;
-		else if (jump == "Joystick1Button16")
-			input = KeyCode.Joystick1Button16;
-		else if (jump == "Joystick1Button17")
-			input = KeyCode.Joystick1Button17;
-		else if (jump == "Joystick1Button18")
-			input = KeyCode.Joystick1Button18;
-		else if (jump == "Joystick1Button19")
-			input = KeyCode.Joystick1Button19;
-		else if (jump == "Joystick2Button1")
-			input = KeyCode.Joystick2Button1;
-		else if (jump == "Joystick2Button2")
-			input = KeyCode.Joystick2Button2;
-		else if (jump == "Joystick2Button3")
-			input = KeyCode.Joystick2Button3;
-		else if (jump == "Joystick2Button4")
-			input = KeyCode.Joystick2Button4;
-		else if (jump == "Joystick2Button5")
-			input = KeyCode.Joystick2Button5;
-		else if (jump == "Joystick2Button6")
-			input = KeyCode.Joystick2Button6;
-		else if (jump == "Joystick2Button7")
-			input = KeyCode.Joystick2Button7;
-		else if (jump == "Joystick2Button8")
-			input = KeyCode.Joystick2Button8;
-		else if (jump == "Joystick2Button9")
-			input = KeyCode.Joystick2Button9;
-		else if (jump == "Joystick2Button10")
-			input = KeyCode.Joystick2Button10;
-		else if (jump == "Joystick2Button11")
-			input = KeyCode.Joystick2Button11;
-		else if (jump == "Joystick2Button12")
-			input = KeyCode.Joystick2Button12;
-		else if (jump == "Joystick2Button13")
-			input = KeyCode.Joystick2Button13;
-		else if (jump == "Joystick2Button14")
-			input = KeyCode.Joystick2Button14;
-		else if (jump == "Joystick2Button15")
-			input = KeyCode.Joystick2Button15;
-		else if (jump == "Joystick2Button16")
-			input = KeyCode.Joystick2Button16;
-		else if (jump == "Joystick2Button17")
-			input = KeyCode.Joystick2Button17;
-		else if (jump == "Joystick2Button18")
-			input = KeyCode.Joystick2Button18;
-		else if (jump == "Joystick2Button19")
-			input = KeyCode.Joystick2Button19;
+		var input = getKeyCodeFromCharCode(jump);
+		var input2 = getKeyCodeFromCharCode(jump2);
 
-		var input2 = KeyCode.JoystickButton1;
-		if (jump == "Joystick1Button1")
-			input2 = KeyCode.Joystick1Button1;
-		else if (jump == "Joystick1Button2")
-			input2 = KeyCode.Joystick1Button2;
-		else if (jump == "Joystick1Button3")
-			input2 = KeyCode.Joystick1Button3;
-		else if (jump == "Joystick1Button4")
-			input2 = KeyCode.Joystick1Button4;
-		else if (jump == "Joystick1Button5")
-			input2 = KeyCode.Joystick1Button5;
-		else if (jump == "Joystick1Button6")
-			input2 = KeyCode.Joystick1Button6;
-		else if (jump == "Joystick1Button7")
-			input2 = KeyCode.Joystick1Button7;
-		else if (jump == "Joystick1Button8")
-			input2 = KeyCode.Joystick1Button8;
-		else if (jump == "Joystick1Button9")
-			input2 = KeyCode.Joystick1Button9;
-		else if (jump == "Joystick1Button10")
-			input2 = KeyCode.Joystick1Button10;
-		else if (jump == "Joystick1Button11")
-			input2 = KeyCode.Joystick1Button11;
-		else if (jump == "Joystick1Button12")
-			input2 = KeyCode.Joystick1Button12;
-		else if (jump == "Joystick1Button13")
-			input2 = KeyCode.Joystick1Button13;
-		else if (jump == "Joystick1Button14")
-			input2 = KeyCode.Joystick1Button14;
-		else if (jump == "Joystick1Button15")
-			input2 = KeyCode.Joystick1Button15;
-		else if (jump == "Joystick1Button16")
-			input2 = KeyCode.Joystick1Button16;
-		else if (jump == "Joystick1Button17")
-			input2 = KeyCode.Joystick1Button17;
-		else if (jump == "Joystick1Button18")
-			input2 = KeyCode.Joystick1Button18;
-		else if (jump == "Joystick1Button19")
-			input2 = KeyCode.Joystick1Button19;
-		else if (jump == "Joystick2Button1")
-			input2 = KeyCode.Joystick2Button1;
-		else if (jump == "Joystick2Button2")
-			input2 = KeyCode.Joystick2Button2;
-		else if (jump == "Joystick2Button3")
-			input2 = KeyCode.Joystick2Button3;
-		else if (jump == "Joystick2Button4")
-			input2 = KeyCode.Joystick2Button4;
-		else if (jump == "Joystick2Button5")
-			input2 = KeyCode.Joystick2Button5;
-		else if (jump == "Joystick2Button6")
-			input2 = KeyCode.Joystick2Button6;
-		else if (jump == "Joystick2Button7")
-			input2 = KeyCode.Joystick2Button7;
-		else if (jump == "Joystick2Button8")
-			input2 = KeyCode.Joystick2Button8;
-		else if (jump == "Joystick2Button9")
-			input2 = KeyCode.Joystick2Button9;
-		else if (jump == "Joystick2Button10")
-			input2 = KeyCode.Joystick2Button10;
-		else if (jump == "Joystick2Button11")
-			input2 = KeyCode.Joystick2Button11;
-		else if (jump == "Joystick2Button12")
-			input2 = KeyCode.Joystick2Button12;
-		else if (jump == "Joystick2Button13")
-			input2 = KeyCode.Joystick2Button13;
-		else if (jump == "Joystick2Button14")
-			input2 = KeyCode.Joystick2Button14;
-		else if (jump == "Joystick2Button15")
-			input2 = KeyCode.Joystick2Button15;
-		else if (jump == "Joystick2Button16")
-			input2 = KeyCode.Joystick2Button16;
-		else if (jump == "Joystick2Button17")
-			input2 = KeyCode.Joystick2Button17;
-		else if (jump == "Joystick2Button18")
-			input2 = KeyCode.Joystick2Button18;
-		else if (jump == "Joystick2Button19")
-			input2 = KeyCode.Joystick2Button19;
+		if (Input.GetKey (input) || Input.GetKey (input2)) {
+			canJump = true;
+		}
 
+		if ((!Input.GetKey (input) && !Input.GetKey (input2)) && !isFalling && canJump) {
+			rigidbody.velocity = new Vector3(0, 6, 0);
+			animator.SetBool ("Jumping", true);
+			canJump = false;
+		}
 
+		isFalling = true;
+
+		
 		// if (Input.GetKey(KeyCode.Joystick1Button1))
 		// 	Debug.Log("KeyCode.Joystick1Button1");
 		// if (Input.GetKey(KeyCode.Joystick1Button2))
@@ -268,24 +147,12 @@ public class Player : MonoBehaviour {
 		// if (Input.GetKey(KeyCode.Joystick2Button19))
 		// 	Debug.Log("KeyCode.Joystick2Button19");
 
-		if (Input.GetKey (input) || Input.GetKey (input2)) {
-			canJump = true;
-		}
-
-		Debug.Log(canJump);
-
-		if ((!Input.GetKey (input) && !Input.GetKey (input2)) && !isFalling && canJump) {
-			rigidbody.velocity = new Vector3(0, 6, 0);
-			animator.SetBool ("Jumping", true);
-			canJump = false;
-		}
-
-		isFalling = true;
 	}
 
 	void OnCollisionEnter(Collision collisionInfo)
 	{
 		if (collisionInfo.gameObject.tag == "car") {
+			stream.Write("p:" + team + "\r\n");
 			rigidbody.gameObject.SetActive (false);
 			GetComponent<MeshRenderer> ().gameObject.SetActive (false);
 			isDead = true;
@@ -298,5 +165,88 @@ public class Player : MonoBehaviour {
 
 	public bool isAlive() {
 		return !isDead;
+	}
+
+	private static KeyCode getKeyCodeFromCharCode(string charCode) {
+		var input = KeyCode.Space;
+
+		if (charCode == "Joystick1Button1")
+			input = KeyCode.Joystick1Button1;
+		else if (charCode == "Joystick1Button2")
+			input = KeyCode.Joystick1Button2;
+		else if (charCode == "Joystick1Button3")
+			input = KeyCode.Joystick1Button3;
+		else if (charCode == "Joystick1Button4")
+			input = KeyCode.Joystick1Button4;
+		else if (charCode == "Joystick1Button5")
+			input = KeyCode.Joystick1Button5;
+		else if (charCode == "Joystick1Button6")
+			input = KeyCode.Joystick1Button6;
+		else if (charCode == "Joystick1Button7")
+			input = KeyCode.Joystick1Button7;
+		else if (charCode == "Joystick1Button8")
+			input = KeyCode.Joystick1Button8;
+		else if (charCode == "Joystick1Button9")
+			input = KeyCode.Joystick1Button9;
+		else if (charCode == "Joystick1Button10")
+			input = KeyCode.Joystick1Button10;
+		else if (charCode == "Joystick1Button11")
+			input = KeyCode.Joystick1Button11;
+		else if (charCode == "Joystick1Button12")
+			input = KeyCode.Joystick1Button12;
+		else if (charCode == "Joystick1Button13")
+			input = KeyCode.Joystick1Button13;
+		else if (charCode == "Joystick1Button14")
+			input = KeyCode.Joystick1Button14;
+		else if (charCode == "Joystick1Button15")
+			input = KeyCode.Joystick1Button15;
+		else if (charCode == "Joystick1Button16")
+			input = KeyCode.Joystick1Button16;
+		else if (charCode == "Joystick1Button17")
+			input = KeyCode.Joystick1Button17;
+		else if (charCode == "Joystick1Button18")
+			input = KeyCode.Joystick1Button18;
+		else if (charCode == "Joystick1Button19")
+			input = KeyCode.Joystick1Button19;
+		else if (charCode == "Joystick2Button1")
+			input = KeyCode.Joystick2Button1;
+		else if (charCode == "Joystick2Button2")
+			input = KeyCode.Joystick2Button2;
+		else if (charCode == "Joystick2Button3")
+			input = KeyCode.Joystick2Button3;
+		else if (charCode == "Joystick2Button4")
+			input = KeyCode.Joystick2Button4;
+		else if (charCode == "Joystick2Button5")
+			input = KeyCode.Joystick2Button5;
+		else if (charCode == "Joystick2Button6")
+			input = KeyCode.Joystick2Button6;
+		else if (charCode == "Joystick2Button7")
+			input = KeyCode.Joystick2Button7;
+		else if (charCode == "Joystick2Button8")
+			input = KeyCode.Joystick2Button8;
+		else if (charCode == "Joystick2Button9")
+			input = KeyCode.Joystick2Button9;
+		else if (charCode == "Joystick2Button10")
+			input = KeyCode.Joystick2Button10;
+		else if (charCode == "Joystick2Button11")
+			input = KeyCode.Joystick2Button11;
+		else if (charCode == "Joystick2Button12")
+			input = KeyCode.Joystick2Button12;
+		else if (charCode == "Joystick2Button13")
+			input = KeyCode.Joystick2Button13;
+		else if (charCode == "Joystick2Button14")
+			input = KeyCode.Joystick2Button14;
+		else if (charCode == "Joystick2Button15")
+			input = KeyCode.Joystick2Button15;
+		else if (charCode == "Joystick2Button16")
+			input = KeyCode.Joystick2Button16;
+		else if (charCode == "Joystick2Button17")
+			input = KeyCode.Joystick2Button17;
+		else if (charCode == "Joystick2Button18")
+			input = KeyCode.Joystick2Button18;
+		else if (charCode == "Joystick2Button19")
+			input = KeyCode.Joystick2Button19;
+
+		return input;
 	}
 }

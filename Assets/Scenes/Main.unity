@@ -873,8 +873,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc9d6f6d40794071b3fdc119704041b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: e
+  jump: Joystick2Button15
   jump2: space
+  team: 2
 --- !u!136 &609119445
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1073,8 +1074,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc9d6f6d40794071b3fdc119704041b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: u
+  jump: Joystick1Button15
   jump2: space
+  team: 1
 --- !u!136 &847136231
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1373,8 +1375,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc9d6f6d40794071b3fdc119704041b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: Joystick2Button2
+  jump: Joystick1Button1
   jump2: space
+  team: 1
 --- !u!4 &1052847365 stripped
 Transform:
   m_PrefabParentObject: {fileID: 424138, guid: 453ee3288a60d864a95f4a435abcc2b3, type: 2}
@@ -1564,6 +1567,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 643834e7d635c45518961542bb80773f, type: 2}
+    - target: {fileID: 180812, guid: 453ee3288a60d864a95f4a435abcc2b3, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 453ee3288a60d864a95f4a435abcc2b3, type: 2}
   m_IsPrefabParent: 0
@@ -1871,8 +1878,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc9d6f6d40794071b3fdc119704041b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: i
+  jump: Joystick2Button15
   jump2: space
+  team: 2
 --- !u!136 &1666557022
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1920,7 +1928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1666622571
 MonoBehaviour:
   m_ObjectHideFlags: 0
