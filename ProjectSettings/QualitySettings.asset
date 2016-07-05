@@ -129,14 +129,8 @@ QualitySettings:
     shadowProjection: 1
     shadowCascades: 4
     shadowDistance: 150
-<<<<<<< Updated upstream
-    shadowNearPlaneOffset: 2
-    shadowCascade2Split: 0.33333334
-    shadowCascade4Split: {x: 0.06666667, y: 0.19999999, z: 0.46666664}
-=======
     shadowCascade2Split: .333333343
     shadowCascade4Split: {x: .0666666701, y: .200000003, z: .466666669}
->>>>>>> Stashed changes
     blendWeights: 4
     textureQuality: 0
     anisotropicTextures: 2
@@ -150,4 +144,21 @@ QualitySettings:
     maximumLODLevel: 0
     particleRaycastBudget: 4096
     excludedTargetPlatforms: []
-  m_PerPlatformDefaultQuality: {}
+  m_PerPlatformDefaultQuality:
+    Android: 2
+    BlackBerry: 2
+    GLES Emulation: 5
+    PS3: 5
+    PS4: 5
+    PSM: 5
+    PSP2: 5
+    Samsung TV: 2
+    Standalone: 5
+    Tizen: 2
+    WP8: 5
+    Web: 5
+    WebGL: 3
+    Windows Store Apps: 5
+    XBOX360: 5
+    XboxOne: 5
+    iPhone: 2
