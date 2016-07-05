@@ -13,6 +13,8 @@ public class Player : MonoBehaviour {
 
 	public string team = "1";
 
+	public GameObject gameController;
+
 	bool isFalling = false;
 	bool canJump = false;
 	Rigidbody rigidbody;
@@ -23,10 +25,10 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (stream == null) {
-			stream = new SerialPort("/dev/ttyACM0", 9600, Parity.None, 8, StopBits.One); // mettre le bon chemin du port usb
-			stream.Open();
-		}
+		// if (stream == null) {
+		// 	stream = new SerialPort("/dev/ttyACM0", 9600, Parity.None, 8, StopBits.One); // mettre le bon chemin du port usb
+		// 	stream.Open();
+		// }
 
 		rigidbody = GetComponent<Rigidbody> ();
 		animator = GetComponent<Animator> ();
@@ -68,7 +70,7 @@ public class Player : MonoBehaviour {
 
 		isFalling = true;
 
-		
+
 		// if (Input.GetKey(KeyCode.Joystick1Button1))
 		// 	Debug.Log("KeyCode.Joystick1Button1");
 		// if (Input.GetKey(KeyCode.Joystick1Button2))
@@ -152,7 +154,8 @@ public class Player : MonoBehaviour {
 	void OnCollisionEnter(Collision collisionInfo)
 	{
 		if (collisionInfo.gameObject.tag == "car") {
-			stream.Write("p:" + team + "\r\n");
+			// stream.Write("p:" + team + "\r\n");
+			gameController.GetComponent<GameController>().SetText("Player die");
 			rigidbody.gameObject.SetActive (false);
 			GetComponent<MeshRenderer> ().gameObject.SetActive (false);
 			isDead = true;
@@ -246,6 +249,14 @@ public class Player : MonoBehaviour {
 			input = KeyCode.Joystick2Button18;
 		else if (charCode == "Joystick2Button19")
 			input = KeyCode.Joystick2Button19;
+		else if (charCode == "a")
+			input = KeyCode.A;
+		else if (charCode == "u")
+			input = KeyCode.U;
+		else if (charCode == "i")
+			input = KeyCode.I;
+		else if (charCode == "e")
+			input = KeyCode.E;
 
 		return input;
 	}
