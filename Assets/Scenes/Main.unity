@@ -427,7 +427,7 @@ Light:
   serializedVersion: 6
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.39999998
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -951,8 +951,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc9d6f6d40794071b3fdc119704041b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: Joystick2Button15
+  jump: JoystickButton1
   jump2: e
+  jump3: space
   team: 2
   gameController: {fileID: 1666622570}
 --- !u!136 &609119445
@@ -1153,8 +1154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc9d6f6d40794071b3fdc119704041b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: Joystick1Button15
+  jump: JoystickButton0
   jump2: u
+  jump3: space
   team: 1
   gameController: {fileID: 1666622570}
 --- !u!136 &847136231
@@ -1296,7 +1298,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .213235319, g: .213235319, b: .213235319, a: .0196078438}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -1455,8 +1457,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc9d6f6d40794071b3fdc119704041b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: Joystick1Button1
-  jump2: a
+  jump: JoystickButton2
+  jump2: q
+  jump3: space
   team: 1
   gameController: {fileID: 1666622570}
 --- !u!4 &1052847365 stripped
@@ -2025,8 +2028,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc9d6f6d40794071b3fdc119704041b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: Joystick2Button15
+  jump: JoystickButton3
   jump2: i
+  jump3: space
   team: 2
   gameController: {fileID: 1666622570}
 --- !u!136 &1666557022
