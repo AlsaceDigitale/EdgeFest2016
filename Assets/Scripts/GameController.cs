@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
 	public int startCountDown = 9;
 
 	public GameObject overlayText;
+	public GameObject overlayTextBackground;
 
 	public GameObject player1;
 	public GameObject player2;
@@ -202,10 +203,12 @@ public class GameController : MonoBehaviour {
 
 	public void SetText(string t) {
 		overlayText.GetComponent<Text>().text = t;
+		overlayTextBackground.GetComponent<Text>().text = t;
 	}
 
 	public void ClearText() {
 		overlayText.GetComponent<Text>().text = "";
+		overlayTextBackground.GetComponent<Text>().text = "";
 	}
 
 	public bool IsPumpActivated() {
