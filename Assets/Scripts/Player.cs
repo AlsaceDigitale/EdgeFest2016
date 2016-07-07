@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
 	public string jump = "space";
 	public string jump2 = "space";
 	public string jump3 = "space";
+	private bool activatePump = false;
 
 	public string team = "1";
 
@@ -26,26 +27,41 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// if (stream == null) {
-		// 	stream = new SerialPort("/dev/ttyACM0", 9600, Parity.None, 8, StopBits.One); // mettre le bon chemin du port usb
-		// 	stream.Open();
-		// }
+		gameController = GameObject.Find("/GameController");
+
+		activatePump = gameController.GetComponent<GameController>().IsPumpActivated();
+
+		if (stream == null && activatePump) {
+			stream = new SerialPort("/dev/ttyACM0", 9600, Parity.None, 8, StopBits.One); // mettre le bon chemin du port usb
+			stream.Open();
+		}
 
 		rigidbody = GetComponent<Rigidbody> ();
 		animator = GetComponent<Animator> ();
 
 		// Debug.Log(string.Join(",",Input.GetJoystickNames()));
 
+		// var input = getKeyCodeFromCharCode(jump);
+		// var input2 = getKeyCodeFromCharCode(jump2);
+
+		// if (!Input.GetKey (input) && !Input.GetKey (input2)) {
+		// 	rigidbody.gameObject.SetActive (false);
+		// 	GetComponent<MeshRenderer> ().gameObject.SetActive (false);
+		// 	isDead = true;
+		// }
+	}
+	
+	public bool PlayerIsPresent() {
 		var input = getKeyCodeFromCharCode(jump);
 		var input2 = getKeyCodeFromCharCode(jump2);
 
-		if (!Input.GetKey (input) && !Input.GetKey (input2)) {
-			rigidbody.gameObject.SetActive (false);
-			GetComponent<MeshRenderer> ().gameObject.SetActive (false);
-			isDead = true;
+		if (Input.GetKey(input) || Input.GetKey(input2)) {
+			return true;
 		}
+
+		return false;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (rigidbody.IsSleeping()) {
@@ -156,11 +172,13 @@ public class Player : MonoBehaviour {
 	void OnCollisionEnter(Collision collisionInfo)
 	{
 		if (collisionInfo.gameObject.tag == "car") {
-			// stream.Write("p:" + team + "\r\n");
-			gameController.GetComponent<GameController>().SetText("Player die");
+			if (activatePump) {
+				stream.Write("p:" + team + "\r\n");
+			}
+			// gameController.GetComponent<GameController>().SetText("Player die");
+			isDead = true;
 			rigidbody.gameObject.SetActive (false);
 			GetComponent<MeshRenderer> ().gameObject.SetActive (false);
-			isDead = true;
 		}
 	}
 
@@ -293,12 +311,56 @@ public class Player : MonoBehaviour {
 			input = KeyCode.Joystick2Button19;
 		else if (charCode == "a")
 			input = KeyCode.A;
-		else if (charCode == "u")
-			input = KeyCode.U;
-		else if (charCode == "i")
-			input = KeyCode.I;
+		else if (charCode == "b")
+			input = KeyCode.B;
+		else if (charCode == "c")
+			input = KeyCode.C;
+		else if (charCode == "d")
+			input = KeyCode.D;
 		else if (charCode == "e")
 			input = KeyCode.E;
+		else if (charCode == "f")
+			input = KeyCode.F;
+		else if (charCode == "g")
+			input = KeyCode.G;
+		else if (charCode == "h")
+			input = KeyCode.H;
+		else if (charCode == "i")
+			input = KeyCode.I;
+		else if (charCode == "j")
+			input = KeyCode.J;
+		else if (charCode == "k")
+			input = KeyCode.K;
+		else if (charCode == "l")
+			input = KeyCode.L;
+		else if (charCode == "m")
+			input = KeyCode.M;
+		else if (charCode == "n")
+			input = KeyCode.N;
+		else if (charCode == "o")
+			input = KeyCode.O;
+		else if (charCode == "p")
+			input = KeyCode.P;
+		else if (charCode == "q")
+			input = KeyCode.Q;
+		else if (charCode == "r")
+			input = KeyCode.R;
+		else if (charCode == "s")
+			input = KeyCode.S;
+		else if (charCode == "t")
+			input = KeyCode.T;
+		else if (charCode == "u")
+			input = KeyCode.U;
+		else if (charCode == "v")
+			input = KeyCode.V;
+		else if (charCode == "w")
+			input = KeyCode.W;
+		else if (charCode == "x")
+			input = KeyCode.X;
+		else if (charCode == "y")
+			input = KeyCode.Y;
+		else if (charCode == "z")
+			input = KeyCode.Z;
 
 		return input;
 	}
