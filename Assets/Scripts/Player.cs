@@ -32,8 +32,12 @@ public class Player : MonoBehaviour {
 		activatePump = gameController.GetComponent<GameController>().IsPumpActivated();
 
 		if (stream == null && activatePump) {
-			stream = new SerialPort("/dev/ttyACM0", 9600, Parity.None, 8, StopBits.One); // mettre le bon chemin du port usb
-			stream.Open();
+			try {
+				stream = new SerialPort("/dev/ttyACM0", 9600, Parity.None, 8, StopBits.One);
+				stream.Open();
+			} catch {
+				Debug.LogError("Error when initializing serial port.");
+			}
 		}
 
 		rigidbody = GetComponent<Rigidbody> ();
@@ -173,7 +177,11 @@ public class Player : MonoBehaviour {
 	{
 		if (collisionInfo.gameObject.tag == "car") {
 			if (activatePump) {
-				stream.Write("p:" + team + "\r\n");
+				try {
+					stream.Write("p:" + team + "\r\n");
+				} catch {
+					Debug.LogError ("Port not open.");
+				}
 			}
 			// gameController.GetComponent<GameController>().SetText("Player die");
 			isDead = true;
